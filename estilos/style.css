@@ -1,0 +1,595 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    place-items: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 1rem;
+    background-color: #172033;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.342), rgba(0, 0, 0, 0.342)), url(../imagenes/fondologin.jfif);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container-form {
+    grid-area: 1 / 1;
+    width: min(900px, 100%);
+    display: flex;
+    height: 500px;
+    border-radius: 20px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, .1);
+    transition: transform .5s ease, opacity .5s ease, visibility .5s ease;
+}
+
+.register .information {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #172033;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.login .information {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #172033;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.register .info-childs h2 {
+    color: #ffffff;
+    width: 100%;
+    padding: 0 30px;
+}
+
+.login .info-childs h2 {
+    color: #ffffff;
+    width: 100%;
+    padding: 0 30px;
+}
+
+.register .info-childs p {
+    margin: 15px 0;
+    padding: 0 18px;
+    color: #f7f7f8;
+    text-align: center;
+}
+
+.login .info-childs p {
+    margin: 15px 0;
+    color: #f7f7f8;
+}
+
+.register .info-childs input {
+    background-color: transparent;
+    outline: none;
+    border: solid 2px #ffffff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #fcfdff;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+
+.login .info-childs input {
+    background-color: transparent;
+    outline: none;
+    border: solid 2px #ffffff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #fcfdff;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+
+.register .info-childs input:hover {
+    background-color: #fdfdfd;
+    border: none;
+    color: #172033;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+}
+
+.login .info-childs input:hover {
+    background-color: #fdfdfd;
+    border: none;
+    color: #172033;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+}
+
+.form-information {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    text-align: center;
+    background-color: #dce5f0a1;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    backdrop-filter: blur(3px);
+}
+
+.form-information-childs {
+    padding: 0 30px;
+}
+
+.form-information-childs h2 {
+    color: #172033;
+    font-size: 2rem;
+}
+
+.form-information-childs p {
+    color: #304F88;
+    font-size: 1rem;
+}
+
+
+.icons {
+    margin: 15px 0;
+}
+
+.icons i {
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    margin: 0 10px;
+    color: #bdaa91;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    border: solid thin red;
+}
+
+.icons i:hover {
+    background-color: white;
+    color: #fff;
+}
+
+.form {
+    margin: 30px 0 0;
+}
+
+.form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border: 2px solid #64748B;
+    border-radius: 20px;
+    padding: 0 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    background-color: #fff;
+}
+
+.form label input {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    color: #000000;
+}
+
+.form label i {
+    color: #a7a7a7;
+}
+
+.form input[type="submit"] {
+    background-color: #394A82;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+}
+
+.form input[type="submit"]:hover {
+    background-color: #16275e;
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-120vw);
+}
+
+@media screen and (max-width: 750px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    .container-form {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        flex-direction: column;
+        height: auto;
+        min-height: 500px;
+    }
+
+    .register .information {
+        width: 100%;
+        padding: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .login .information {
+        width: 100%;
+        padding: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .form-information {
+        width: 100%;
+        padding: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 0;
+    }
+
+    .form-information-childs {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+.form label img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    flex: 0 0 14px;
+    opacity: .65;
+    margin-right: 5px;
+}
+
+/* Diferencia visualmente los avisos de éxito y error del registro. */
+.form-message {
+    margin: 0 0 12px;
+    font-size: .9rem;
+}
+
+.form-message.success {
+    color: #176b36;
+}
+
+.form-message.error {
+    color: #b42318;
+}
+
+h2 {
+    color: #172033;
+}
+
+h4 {
+    color: #172033;
+
+}
+
+.campo {
+    width: 100%;
+    margin: 0 auto 1rem auto;
+    text-align: left;
+}
+
+.campo h4 {
+    text-align: left;
+    margin: 0 0 0.3rem 0;
+}
+
+.campo input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* MENSAJES DE VALIDACIÓN DEL CORREO */
+
+.mensaje-correo {
+    display: block;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    font-weight: 500;
+}
+
+.mensaje-correo.error {
+    color: #b42318;
+}
+
+.mensaje-correo.success {
+    color: #176b36;
+}
+
+.mensaje-campo {
+    display: block;
+    color: #b42318;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: left;
+    margin-top: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.ayuda-contrasena {
+    color: #26354d;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Mensajes de error */
+.error-campo {
+    display: none;
+    color: #d00000;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.error-campo.visible {
+    display: block;
+}
+
+.mensaje-servidor {
+    display: block;
+    color: #d00000;
+    font-size: 0.85rem;
+}
+
+.error-campo {
+    display: none;
+    color: #d00000;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+}
+
+
+.error-campo.visible {
+    display: block;
+}
+
+/* =====================================
+   CAMPO DE CORREO CON DOMINIO SELECCIONABLE
+===================================== */
+
+.form .correo-control {
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-bottom: 15px;
+
+    border: 2px solid #64748B;
+    border-radius: 20px;
+
+    padding: 0 0 0 10px;
+    overflow: hidden;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+
+    background-color: #fff;
+
+}
+
+
+/* ICONO DEL CORREO */
+
+.form .correo-control img {
+
+    width: 14px;
+    height: 14px;
+
+    object-fit: contain;
+
+    flex: 0 0 14px;
+
+    opacity: .65;
+
+    margin-right: 5px;
+
+}
+
+
+/* CAMPO DONDE SE ESCRIBE EL CORREO */
+
+.form .correo-control .correo-local {
+
+    flex: 1;
+
+    min-width: 0;
+
+    width: auto;
+
+    padding: 10px 8px;
+
+    background-color: transparent;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    color: #000;
+
+}
+
+
+/* SELECTOR DEL DOMINIO */
+
+.form .correo-control .dominio-correo {
+
+    flex: 0 0 116px;
+
+    width: 116px;
+
+    max-width: 45%;
+
+    height: 36px;
+
+    padding: 0 5px;
+
+    border: none;
+
+    border-left: 2px solid #64748B;
+
+    border-radius: 0;
+
+    outline: none;
+
+    background-color: transparent;
+
+    color: #172033;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: .72rem;
+
+    cursor: pointer;
+
+}
+
+
+/* Indicador visible al navegar con el teclado */
+
+.keyboard-navigation .form .correo-control:focus-within {
+
+    border-color: #394A82;
+    outline: 3px solid #3498db;
+    outline-offset: 3px;
+
+}
+
+.keyboard-navigation .register .info-childs input:focus,
+.keyboard-navigation .login .info-childs input:focus,
+.keyboard-navigation .form label input:focus,
+.keyboard-navigation .form input[type="submit"]:focus,
+.keyboard-navigation a:focus,
+.keyboard-navigation button:focus {
+
+    outline: 3px solid #3498db;
+    outline-offset: 3px;
+    border-radius: 4px;
+
+}
+
+/* El indicador solo se muestra después de iniciar la navegación con Tab */
+.keyboard-navigation :focus {
+    outline: 3px solid #3498db;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.container-form.register {
+    height: auto;
+    min-height: 500px;
+}
+
+/* =====================================
+   MOSTRAR Y OCULTAR CONTRASEÑA
+===================================== */
+
+/* CONTENEDOR */
+
+.password-control {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* CAMPO DE CONTRASEÑA */
+
+.password-control label {
+    margin-bottom: 0;
+    padding-right: 44px;
+}
+
+/* BOTÓN DEL OJO */
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    background: transparent;
+    color: #64748B;
+
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* TAMAÑO DE LOS ICONOS */
+
+.toggle-password svg {
+    width: 19px;
+    height: 19px;
+}
+
+/* OCULTAR EL OJO TACHADO */
+
+.toggle-password .icon-eye-off {
+    display: none;
+}
+
+/* CUANDO EL OJO ESTÁ ACTIVADO */
+
+.toggle-password.is-visible .icon-eye {
+    display: none;
+}
+
+.toggle-password.is-visible .icon-eye-off {
+    display: block;
+}
+
+/* EFECTO AL PASAR EL RATÓN */
+
+.toggle-password:hover {
+    color: #394A82;
+}
+
+.info-childs .logo-bienvenida {
+    display: block;
+    width: 105px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto 18px;
+}

@@ -1,0 +1,102 @@
+/* Configuración general */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* Encabezado */
+header {
+    background-color: #243b55;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+/* Contenido principal */
+
+main {
+    width: 90%;
+    max-width: 70rem;
+    margin: 3rem auto;
+}
+
+/* Sección de bienvenida */
+
+section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.08);
+}
+
+/* Título */
+
+section h2 {
+    margin-bottom: 1rem;
+    color: #243b55;
+}
+
+/* Párrafo */
+
+section p {
+    line-height: 1.6;
+}
+/* Menú de navegación */
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* Enlaces del menú */
+
+nav a {
+    text-decoration: none;
+    color: #243b55;
+    font-weight: bold;
+}
+
+/* Efecto al pasar el cursor */
+
+nav a:hover {
+    text-decoration: underline;
+}
+/* Estilos para la barra de navegación */
+header nav {
+    margin-top: 1rem;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+header nav a {
+    color: #243b55;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+header nav a:hover,
+header nav a:focus-visible {
+    text-decoration: underline;
+    outline: 2px solid #243b55; /* Mantiene la accesibilidad para navegación por teclado */
+    outline-offset: 2px;
+}
