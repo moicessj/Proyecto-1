@@ -247,6 +247,58 @@ const confirmarContrasena = document.getElementById("confirmarContrasenaRegistro
 
 const errorConfirmarContrasena = document.getElementById("errorConfirmarContrasena");
 
+// =====================================
+// VALIDACIÓN INDIVIDUAL DE CONTRASEÑA
+// =====================================
+
+const requisitosContrasena = [
+    {
+        elemento: document.getElementById("reqLongitud"),
+        comprobar: valor => valor.length >= 8
+    },
+    {
+        elemento: document.getElementById("reqMayuscula"),
+        comprobar: valor => /[A-Z]/.test(valor)
+    },
+    {
+        elemento: document.getElementById("reqMinuscula"),
+        comprobar: valor => /[a-z]/.test(valor)
+    },
+    {
+        elemento: document.getElementById("reqNumero"),
+        comprobar: valor => /[0-9]/.test(valor)
+    },
+    {
+        elemento: document.getElementById("reqSimbolo"),
+        comprobar: valor => /[^A-Za-z0-9\s]/.test(valor)
+    }
+];
+
+function actualizarRequisitosContrasena() {
+
+    const valor = contrasena.value;
+
+    requisitosContrasena.forEach(function (requisito) {
+
+        const cumple = requisito.comprobar(valor);
+
+        requisito.elemento.classList.toggle(
+            "requisito-cumplido",
+            cumple
+        );
+
+        requisito.elemento.classList.toggle(
+            "requisito-pendiente",
+            !cumple
+        );
+
+    });
+
+}
+
+contrasena.addEventListener("input", actualizarRequisitosContrasena);
+contrasena.addEventListener("blur", actualizarRequisitosContrasena);
+
 function validarConfirmacion() {
 
    if (confirmarContrasena.value === "") {
@@ -298,17 +350,21 @@ contrasena.addEventListener("input", validarConfirmacion);
 
         });
 
-        // Ocultar error cuando el campo ya es correcto
-        campo.input.addEventListener("input", function () {
+        /// Actualizar mensajes mientras el usuario escribe
+    campo.input.addEventListener("input", function () {
 
-            if (campo.input.checkValidity()) {
-                campo.error.classList.remove("visible");
-            }
+    if (campo.input.checkValidity()) {
 
-        });
+        campo.error.classList.remove("visible");
 
-    });
+    } else if (campo.input.id === "contrasenaRegistro") {
 
+        campo.error.classList.add("visible");
+
+    }
+
+});
+    }); // Cierra el recorrido de campos
     // Comprobar todos los campos al intentar registrarse
     formulario.addEventListener("submit", function (event) {
 

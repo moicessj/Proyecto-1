@@ -593,3 +593,15 @@ h4 {
     object-fit: contain;
     margin: 0 auto 18px;
 }
+
+.requisitos-contrasena span {
+    display: inline;
+}
+
+.requisitos-contrasena .requisito-cumplido {
+    color: green;
+}
+
+.requisitos-contrasena .requisito-pendiente {
+    color: red;
+}

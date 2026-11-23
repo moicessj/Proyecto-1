@@ -163,17 +163,52 @@ if ($correoLocal === "" || $dominioCorreo === "") {
 // Validar contraseña
 $patron = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9\s]).{8,}$/';
 
+
+// ==========================================
+// VALIDAR CONTRASEÑA
+// ==========================================
+
+$requisitosFaltantes = [];
+
 if ($contrasena === "") {
 
     $erroresRegistro["contrasena"] = "Escribe una contraseña.";
 
-} elseif (strlen($contrasena) < 8) {
+} else {
 
-    $erroresRegistro["contrasena"] = "La contraseña debe tener al menos 8 caracteres.";
+    // Comprobar longitud
+    if (strlen($contrasena) < 8) {
+        $requisitosFaltantes[] = "8 caracteres mínimo";
+    }
 
-} elseif (!preg_match($patron, $contrasena)) {
+    // Comprobar mayúscula
+    if (!preg_match('/[A-Z]/', $contrasena)) {
+        $requisitosFaltantes[] = "una mayúscula";
+    }
 
-    $erroresRegistro["contrasena"] = "La contraseña debe tener una mayúscula, una minúscula, un número y un símbolo.";
+    // Comprobar minúscula
+    if (!preg_match('/[a-z]/', $contrasena)) {
+        $requisitosFaltantes[] = "una minúscula";
+    }
+
+    // Comprobar número
+    if (!preg_match('/[0-9]/', $contrasena)) {
+        $requisitosFaltantes[] = "un número";
+    }
+
+    // Comprobar símbolo especial
+    if (!preg_match('/[^A-Za-z0-9\s]/', $contrasena)) {
+        $requisitosFaltantes[] = "un símbolo especial";
+    }
+
+    // Construir mensaje con los requisitos incumplidos
+    if (!empty($requisitosFaltantes)) {
+
+        $erroresRegistro["contrasena"] =
+            "A la contraseña le falta: " .
+            implode(" · ", $requisitosFaltantes) . ".";
+
+    }
 
 }
 
@@ -626,9 +661,17 @@ $mostrarFormularioLogin = (
 </button>
 </div>
 
-                        <small id="errorContrasena" class="error-campo">
-                            Escribe una contraseña con al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial.
-                        </small>
+         <small id="errorContrasena" class="error-campo">
+             <span id="reqLongitud">8 caracteres mínimo</span>
+            <span class="separador"> · </span> 
+            <span id="reqMayuscula">Una mayúscula</span>
+            <span class="separador"> · </span>
+            <span id="reqMinuscula">Una minúscula</span>
+            <span class="separador"> · </span>         
+            <span id="reqNumero">Un número</span>
+            <span class="separador"> · </span>
+             <span id="reqSimbolo">Un símbolo especial</span>
+        </small>
 
                         <?php if ($erroresRegistro["contrasena"] !== ""): ?>
 
