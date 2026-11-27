@@ -1,3 +1,54 @@
+/* =========================================
+   IDENTIDAD VISUAL DEL SISTEMA IVSS
+   PALETA DE COLORES - MODO CLARO
+========================================= */
+
+:root {
+
+    /* COLORES INSTITUCIONALES */
+
+    --color-primario: #183153;
+    --color-botones: #244A73;
+    --color-secundario: #2B5A8A;
+    --color-acento: #2C7A7B;
+
+    /* FONDOS Y SUPERFICIES */
+
+    --color-fondo: #F4F7FB;
+    --color-superficie: #FFFFFF;
+
+    /* TEXTOS */
+
+    --color-texto: #1E293B;
+    --color-texto-secundario: #526174;
+
+    /* BORDES Y SOMBRAS */
+
+    --color-borde: #D8E1EC;
+    --sombra-tarjeta: 0 0.2rem 0.6rem rgba(15, 23, 42, 0.08);
+
+    /* ESTADOS DE LOS REPORTES */
+
+    --color-pendiente: #1D4ED8;
+    --fondo-pendiente: #EAF1FF;
+
+    --color-proceso: #8A5200;
+    --fondo-proceso: #FFF3DC;
+
+    --color-resuelto: #176B45;
+    --fondo-resuelto: #E8F5EC;
+
+    --color-rechazado: #B42318;
+    --fondo-rechazado: #FDECEC;
+
+    /* REDONDEADO Y ANIMACIONES */
+
+    --radio-tarjeta: 0.75rem;
+    --radio-control: 0.5rem;
+
+    --transicion: 180ms ease;
+
+}
 /* Configuración general */
 
 * {
@@ -99,4 +150,1513 @@ header nav a:focus-visible {
     text-decoration: underline;
     outline: 2px solid #243b55; /* Mantiene la accesibilidad para navegación por teclado */
     outline-offset: 2px;
+}
+
+/* =========================================
+   BARRA DE NAVEGACIÓN INSTITUCIONAL
+========================================= */
+
+.barra-superior {
+
+    background-color: var(--color-primario);
+
+    color: #FFFFFF;
+
+    padding: 0.85rem 1.5rem;
+
+    text-align: left;
+
+}
+
+.barra-contenido {
+
+    width: 100%;
+
+    max-width: 75rem;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 1.5rem;
+
+}
+
+
+/* LOGO Y MARCA */
+
+.marca-institucional {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.75rem;
+
+    text-decoration: none;
+
+    color: #FFFFFF;
+
+    flex-shrink: 0;
+
+}
+
+.marca-logo {
+
+    width: 2.8rem;
+
+    height: 2.8rem;
+
+    object-fit: contain;
+
+    padding: 0.2rem;
+
+    border-radius: 0.5rem;
+
+}
+
+.marca-texto {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.15rem;
+
+}
+
+.marca-texto strong {
+
+    font-size: 1.15rem;
+
+    color: #FFFFFF;
+
+}
+
+.marca-texto span {
+
+    font-size: 0.78rem;
+
+    color: #DCE8F5;
+
+}
+
+
+/* NAVEGACIÓN PRINCIPAL */
+
+.barra-superior .navegacion-principal {
+
+    margin-top: 0;
+
+}
+
+.barra-superior .navegacion-principal ul {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 0.5rem;
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+.barra-superior .navegacion-principal a {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 2.75rem;
+
+    padding: 0.6rem 0.9rem;
+
+    color: #FFFFFF;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+
+    font-weight: 600;
+
+    border-radius: 0.5rem;
+
+    transition: background-color var(--transicion);
+
+}
+
+.barra-superior .navegacion-principal a:hover {
+
+    background-color: rgba(255, 255, 255, 0.12);
+
+}
+
+.barra-superior .navegacion-principal .enlace-activo {
+
+    background-color: rgba(255, 255, 255, 0.15);
+
+}
+
+
+/* USUARIO Y CIERRE DE SESIÓN */
+
+.acciones-nav {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 1rem;
+
+}
+
+.usuario-nav {
+
+    color: #FFFFFF;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+}
+
+.cerrar-sesion {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 2.75rem;
+
+    padding: 0.6rem 0.9rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
+    border-radius: 0.5rem;
+
+    color: #FFFFFF;
+
+    text-decoration: none;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    transition: background-color var(--transicion);
+
+}
+
+.cerrar-sesion:hover {
+
+    background-color: rgba(255, 255, 255, 0.15);
+
+}
+
+
+/* ACCESIBILIDAD DEL MENÚ */
+
+.barra-superior a:focus-visible {
+
+    outline: 2px solid #FFFFFF;
+
+    outline-offset: 3px;
+
+}
+
+
+/* ADAPTACIÓN A PANTALLAS PEQUEÑAS */
+
+@media screen and (max-width: 48rem) {
+
+    .barra-contenido {
+
+        flex-wrap: wrap;
+
+        gap: 0.9rem;
+
+    }
+
+    .navegacion-principal {
+
+        width: 100%;
+
+    }
+
+    .barra-superior .navegacion-principal ul {
+
+        justify-content: flex-start;
+
+    }
+
+    .acciones-nav {
+
+        width: 100%;
+
+        justify-content: space-between;
+
+    }
+
+}
+
+/* =========================================
+   CORRECCIÓN DE LA BARRA INSTITUCIONAL
+========================================= */
+
+header.barra-superior {
+
+    display: block !important;
+
+    width: 100%;
+
+    background-color: #183153 !important;
+
+    color: #FFFFFF;
+
+    padding: 0.85rem 1.5rem;
+
+    text-align: left;
+
+}
+
+header.barra-superior .barra-contenido {
+
+    width: 100%;
+
+    max-width: 75rem;
+
+    margin: 0 auto;
+
+    display: flex !important;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 1.5rem;
+
+}
+
+
+/* CORREGIR TAMAÑO DEL LOGO */
+
+header.barra-superior .marca-logo {
+
+    display: block !important;
+
+    width: 2.8rem !important;
+
+    height: 2.8rem !important;
+
+    max-width: 2.8rem !important;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+
+}
+
+
+/* MANTENER ALINEACIÓN DE LA MARCA */
+
+header.barra-superior .marca-institucional {
+
+    display: flex !important;
+
+    align-items: center;
+
+    gap: 0.75rem;
+
+    flex-shrink: 0;
+
+}
+
+
+/* AJUSTE PARA MÓVILES */
+
+@media screen and (max-width: 48rem) {
+
+    header.barra-superior .barra-contenido {
+
+        flex-wrap: wrap;
+
+        gap: 0.9rem;
+
+    }
+
+    header.barra-superior .marca-logo {
+
+        width: 2.8rem !important;
+
+        height: 2.8rem !important;
+
+    }
+
+}
+
+/* =========================================
+   ENCABEZADO DE BIENVENIDA
+========================================= */
+
+.seccion-bienvenida {
+
+    background-color: var(--color-superficie);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-tarjeta);
+
+    padding: 2rem;
+
+    box-shadow: var(--sombra-tarjeta);
+
+    margin-bottom: 1.5rem;
+
+}
+
+
+/* TÍTULO DE BIENVENIDA */
+
+.seccion-bienvenida h2 {
+
+    color: var(--color-primario);
+
+    font-size: 1.8rem;
+
+    margin-bottom: 0.75rem;
+
+}
+
+
+/* DESCRIPCIÓN */
+
+.bienvenida-descripcion p {
+
+    color: var(--color-texto-secundario);
+
+    font-size: 1rem;
+
+    line-height: 1.6;
+
+}
+
+
+/* DISTINTIVO INSTITUCIONAL */
+
+.bienvenida-distintivo {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.5rem;
+
+    margin-top: 1rem;
+
+    color: var(--color-acento);
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+}
+
+.bienvenida-distintivo span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 1.4rem;
+
+    height: 1.4rem;
+
+    border-radius: 50%;
+
+    background-color: #E5F3F1;
+
+}
+
+
+/* ADAPTACIÓN A MÓVILES */
+
+@media screen and (max-width: 48rem) {
+
+    .seccion-bienvenida {
+
+        padding: 1.25rem;
+
+    }
+
+    .seccion-bienvenida h2 {
+
+        font-size: 1.5rem;
+
+    }
+
+}
+
+/* =========================================
+   PANEL DE ESTADÍSTICAS DEL ADMINISTRADOR
+========================================= */
+
+.panel-estadisticas {
+    margin: 2rem 0 2.5rem;
+    padding: 1.5rem;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 1rem;
+    box-shadow: 0 5px 18px rgba(24, 49, 83, 0.06);
+}
+
+.encabezado-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.etiqueta-seccion {
+    display: inline-block;
+    margin-bottom: 0.4rem;
+    color: var(--color-acento);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+}
+
+.encabezado-panel h3 {
+    margin: 0;
+    color: var(--color-primario);
+    font-size: 1.4rem;
+}
+
+.encabezado-panel p {
+    margin: 0.4rem 0 0;
+    color: var(--color-texto-secundario);
+    font-size: 0.92rem;
+}
+
+.distintivo-panel {
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 2rem;
+    background: var(--color-fondo);
+    color: var(--color-texto-secundario);
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Distribución de las tarjetas */
+
+.rejilla-estadisticas {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+/* Tarjeta individual */
+
+.tarjeta-estadistica {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    min-width: 0;
+    padding: 1.25rem;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-top: 4px solid var(--color-botones);
+    border-radius: 0.85rem;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.tarjeta-estadistica:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(24, 49, 83, 0.09);
+}
+
+/* Colores de cada tipo de reporte */
+
+.tarjeta-total {
+    border-top-color: var(--color-botones);
+}
+
+.tarjeta-pendientes {
+    border-top-color: #1D4ED8;
+}
+
+.tarjeta-proceso {
+    border-top-color: #D18A16;
+}
+
+.tarjeta-resueltos {
+    border-top-color: #23845A;
+}
+
+/* Iconos */
+
+.estadistica-icono {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 0.75rem;
+    background: var(--color-fondo);
+    color: var(--color-primario);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.tarjeta-pendientes .estadistica-icono {
+    background: #EAF1FF;
+    color: #1D4ED8;
+}
+
+.tarjeta-proceso .estadistica-icono {
+    background: #FFF3DC;
+    color: #8A5200;
+}
+
+.tarjeta-resueltos .estadistica-icono {
+    background: #E8F5EC;
+    color: #176B45;
+}
+
+/* Contenido */
+
+.estadistica-contenido {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.25rem;
+}
+
+.estadistica-etiqueta {
+    color: var(--color-texto-secundario);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.estadistica-numero {
+    color: var(--color-primario);
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.estadistica-descripcion {
+    color: var(--color-texto-secundario);
+    font-size: 0.78rem;
+}
+
+/* Adaptación para pantallas medianas */
+
+@media (max-width: 1050px) {
+    .rejilla-estadisticas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Adaptación para teléfonos */
+
+@media (max-width: 600px) {
+    .panel-estadisticas {
+        padding: 1rem;
+    }
+
+    .encabezado-panel {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .rejilla-estadisticas {
+        grid-template-columns: 1fr;
+    }
+
+    .tarjeta-estadistica {
+        padding: 1rem;
+    }
+
+    .estadistica-numero {
+        font-size: 1.8rem;
+    }
+}
+
+/* =========================================
+   FORMULARIO DE REGISTRO DE REPORTES
+========================================= */
+
+/* Sección principal */
+
+.seccion-formulario {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Encabezado del formulario */
+
+.encabezado-formulario {
+    margin-bottom: 1.75rem;
+}
+
+.encabezado-formulario h3 {
+    color: var(--color-primario);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.encabezado-formulario p {
+    color: var(--color-texto-secundario);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Organización de los campos */
+
+.formulario-reporte {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Etiquetas */
+
+.grupo-campo label {
+    color: var(--color-texto);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Campos de texto, listas y descripción */
+
+.grupo-campo input,
+.grupo-campo select,
+.grupo-campo textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-texto);
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-control);
+    transition: border-color var(--transicion);
+}
+
+/* Área de descripción */
+
+.grupo-campo textarea {
+    min-height: 9rem;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Indicador de foco para teclado */
+
+.grupo-campo input:focus-visible,
+.grupo-campo select:focus-visible,
+.grupo-campo textarea:focus-visible {
+    outline: 2px solid var(--color-secundario);
+    outline-offset: 2px;
+    border-color: var(--color-secundario);
+}
+
+/* Adaptación para teléfonos */
+
+@media screen and (max-width: 48rem) {
+    .seccion-formulario {
+        padding: 1.25rem;
+    }
+
+    .encabezado-formulario h3 {
+        font-size: 1.3rem;
+    }
+
+    .grupo-campo input,
+    .grupo-campo select,
+    .grupo-campo textarea {
+        padding: 0.8rem;
+    }
+}
+
+/* =========================================
+   BOTÓN ENVIAR REPORTE
+========================================= */
+
+.boton-enviar-reporte {
+    padding: 0.85rem 1.5rem;
+    background-color: var(--color-botones);
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--radio-control);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transicion),
+                transform var(--transicion);
+}
+
+.boton-enviar-reporte:hover {
+    background-color: var(--color-primario);
+}
+
+.boton-enviar-reporte:active {
+    transform: scale(0.98);
+}
+
+.boton-enviar-reporte:focus-visible {
+    outline: 2px solid var(--color-secundario);
+    outline-offset: 3px;
+}
+
+/* Adaptación para teléfonos */
+
+@media screen and (max-width: 48rem) {
+    .boton-enviar-reporte {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   TARJETA DE DETALLE DEL REPORTE
+========================================= */
+
+.detalle-reporte {
+
+    width: 100%;
+
+    margin-bottom: 2rem;
+
+    padding: 1.75rem;
+
+    background-color: var(--color-superficie);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-tarjeta);
+
+    box-shadow: var(--sombra-tarjeta);
+
+}
+
+
+/* ENCABEZADO DEL REPORTE */
+
+.detalle-reporte-encabezado {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    margin-bottom: 1.75rem;
+
+}
+
+
+.detalle-etiqueta {
+
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color: var(--color-acento);
+
+    font-size: 0.75rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+
+}
+
+
+.detalle-reporte-encabezado h2 {
+
+    margin: 0;
+
+    color: var(--color-primario);
+
+    font-size: 1.5rem;
+
+}
+
+
+/* DISTRIBUCIÓN DE LA INFORMACIÓN */
+
+.detalle-reporte-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 1rem;
+
+}
+
+
+/* TARJETAS INDIVIDUALES */
+
+.detalle-dato {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.5rem;
+
+    min-width: 0;
+
+    padding: 1rem;
+
+    background-color: var(--color-fondo);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-control);
+
+}
+
+
+.detalle-dato span {
+
+    color: var(--color-texto-secundario);
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+}
+
+
+.detalle-dato strong {
+
+    color: var(--color-texto);
+
+    font-size: 0.95rem;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* DESCRIPCIÓN DEL REPORTE */
+
+.detalle-descripcion {
+
+    margin-top: 1.5rem;
+
+    padding: 1.25rem;
+
+    background-color: var(--color-fondo);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-control);
+
+}
+
+
+.detalle-descripcion h3 {
+
+    margin-bottom: 0.75rem;
+
+    color: var(--color-primario);
+
+}
+
+
+.detalle-descripcion p {
+
+    color: var(--color-texto);
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* ETIQUETAS DE ESTADO */
+
+.etiqueta-estado {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 0.45rem 0.85rem;
+
+    border-radius: 2rem;
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+.estado-pendiente {
+
+    color: var(--color-pendiente);
+
+    background-color: var(--fondo-pendiente);
+
+}
+
+
+.estado-proceso {
+
+    color: var(--color-proceso);
+
+    background-color: var(--fondo-proceso);
+
+}
+
+
+.estado-resuelto {
+
+    color: var(--color-resuelto);
+
+    background-color: var(--fondo-resuelto);
+
+}
+
+/* =========================================
+   RESPONSIVE - DETALLE DEL REPORTE
+========================================= */
+
+@media screen and (max-width: 768px) {
+
+    .detalle-reporte-grid {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    }
+
+    .detalle-reporte-encabezado {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+}
+
+
+@media screen and (max-width: 500px) {
+
+    .detalle-reporte {
+
+        padding: 1rem;
+
+    }
+
+    .detalle-reporte-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/* =========================================
+   PANEL DE ACTUALIZACIÓN DEL REPORTE
+========================================= */
+
+.panel-actualizacion {
+
+    width: 100%;
+
+    margin-bottom: 2rem;
+
+    padding: 1.75rem;
+
+    background-color: var(--color-superficie);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-tarjeta);
+
+    box-shadow: var(--sombra-tarjeta);
+
+}
+
+
+/* ENCABEZADO */
+
+.encabezado-actualizacion {
+
+    margin-bottom: 1.5rem;
+
+}
+
+.encabezado-actualizacion h3 {
+
+    color: var(--color-primario);
+
+    font-size: 1.4rem;
+
+    margin-bottom: 0.5rem;
+
+}
+
+.encabezado-actualizacion p {
+
+    color: var(--color-texto-secundario);
+
+    line-height: 1.6;
+
+}
+
+
+/* ORGANIZACIÓN DEL FORMULARIO */
+
+.formulario-actualizacion {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1.25rem;
+
+}
+
+
+/* ASIGNACIÓN DEL TÉCNICO */
+
+.asignacion-tecnico {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.65rem;
+
+    padding: 1rem;
+
+    background-color: var(--color-fondo);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-control);
+
+}
+
+.asignacion-tecnico input {
+
+    width: 18px;
+
+    height: 18px;
+
+    accent-color: var(--color-botones);
+
+    cursor: pointer;
+
+}
+
+.asignacion-tecnico label {
+
+    color: var(--color-texto);
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+/* CAMPOS */
+
+.campo-actualizacion {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.5rem;
+
+}
+
+.campo-actualizacion label {
+
+    color: var(--color-texto);
+
+    font-weight: 600;
+
+}
+
+.campo-actualizacion select,
+.campo-actualizacion textarea {
+
+    width: 100%;
+
+    padding: 0.85rem 1rem;
+
+    font-family: inherit;
+
+    font-size: 1rem;
+
+    color: var(--color-texto);
+
+    background-color: var(--color-superficie);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-control);
+
+    transition: border-color var(--transicion);
+
+}
+
+.campo-actualizacion textarea {
+
+    min-height: 120px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+
+}
+
+
+/* ENFOQUE DE LOS CAMPOS */
+
+.campo-actualizacion select:focus-visible,
+.campo-actualizacion textarea:focus-visible {
+
+    outline: 2px solid var(--color-secundario);
+
+    outline-offset: 2px;
+
+    border-color: var(--color-secundario);
+
+}
+
+
+/* BOTÓN GUARDAR */
+
+.boton-guardar-cambios {
+
+    align-self: flex-start;
+
+    padding: 0.85rem 1.5rem;
+
+    color: #FFFFFF;
+
+    background-color: var(--color-botones);
+
+    border: none;
+
+    border-radius: var(--radio-control);
+
+    font-family: inherit;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color var(--transicion),
+                transform var(--transicion);
+
+}
+
+.boton-guardar-cambios:hover {
+
+    background-color: var(--color-primario);
+
+}
+
+.boton-guardar-cambios:active {
+
+    transform: scale(0.98);
+
+}
+
+.boton-guardar-cambios:focus-visible {
+
+    outline: 2px solid var(--color-secundario);
+
+    outline-offset: 3px;
+
+}
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 600px) {
+
+    .panel-actualizacion {
+
+        padding: 1rem;
+
+    }
+
+    .boton-guardar-cambios {
+
+        width: 100%;
+
+    }
+
+}
+
+/* =========================================
+   HISTORIAL DE OBSERVACIONES
+========================================= */
+
+.panel-historial {
+
+    width: 100%;
+
+    margin-bottom: 2rem;
+
+    padding: 1.75rem;
+
+    background-color: var(--color-superficie);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-tarjeta);
+
+    box-shadow: var(--sombra-tarjeta);
+
+}
+
+
+/* ENCABEZADO DEL HISTORIAL */
+
+.encabezado-historial {
+
+    margin-bottom: 1.75rem;
+
+}
+
+.encabezado-historial h3 {
+
+    color: var(--color-primario);
+
+    font-size: 1.4rem;
+
+    margin-bottom: 0.5rem;
+
+}
+
+.encabezado-historial p {
+
+    color: var(--color-texto-secundario);
+
+    line-height: 1.6;
+
+}
+
+
+/* LISTA DE OBSERVACIONES */
+
+.lista-historial {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* CADA OBSERVACIÓN */
+
+.item-historial {
+
+    position: relative;
+
+    margin-left: 0.45rem;
+
+    padding: 0 0 1.5rem 1.4rem;
+
+    border-left: 2px solid var(--color-borde);
+
+}
+
+
+/* OCULTAR LA LÍNEA DEL ÚLTIMO ELEMENTO */
+
+.item-historial:last-child {
+
+    border-left-color: transparent;
+
+    padding-bottom: 0;
+
+}
+
+
+/* CÍRCULO DE LA LÍNEA DE TIEMPO */
+
+.item-historial::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: -0.43rem;
+
+    top: 0.2rem;
+
+    width: 0.7rem;
+
+    height: 0.7rem;
+
+    background-color: var(--color-acento);
+
+    border: 3px solid var(--color-superficie);
+
+    border-radius: 50%;
+
+}
+
+
+/* TÉCNICO Y FECHA */
+
+.meta-historial {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 0.5rem;
+
+    margin-bottom: 0.75rem;
+
+}
+
+
+.meta-historial strong {
+
+    color: var(--color-primario);
+
+    font-size: 0.95rem;
+
+}
+
+
+.meta-historial time {
+
+    color: var(--color-texto-secundario);
+
+    font-size: 0.82rem;
+
+}
+
+
+/* COMENTARIO */
+
+.contenido-observacion {
+
+    padding: 1rem;
+
+    background-color: var(--color-fondo);
+
+    border: 1px solid var(--color-borde);
+
+    border-radius: var(--radio-control);
+
+}
+
+
+.contenido-observacion p {
+
+    color: var(--color-texto);
+
+    font-size: 0.95rem;
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* ESTADO VACÍO */
+
+.historial-vacio {
+
+    padding: 1.5rem;
+
+    text-align: center;
+
+    background-color: var(--color-fondo);
+
+    border: 1px dashed var(--color-borde);
+
+    border-radius: var(--radio-control);
+
+}
+
+
+.historial-vacio p {
+
+    color: var(--color-texto-secundario);
+
+}
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 600px) {
+
+    .panel-historial {
+
+        padding: 1rem;
+
+    }
+
+    .meta-historial {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
 }

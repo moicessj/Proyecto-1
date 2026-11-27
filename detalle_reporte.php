@@ -28,10 +28,38 @@ $stmtUser->execute([
 
 $rolActual = $stmtUser->fetchColumn();
 
-// Comprobar que sea administrador
-if ($rolActual !== 'administrador') {
+// Consultar quién es el propietario del reporte
+$sqlPropietario = "SELECT usuario_id
+                   FROM public.reportes
+                   WHERE id = :id
+                   LIMIT 1";
+
+$stmtPropietario = $conexion->prepare($sqlPropietario);
+
+$stmtPropietario->execute([
+    ':id' => $reporte_id
+]);
+
+$idPropietario = $stmtPropietario->fetchColumn();
+
+// Comprobar que el reporte exista
+if ($idPropietario === false) {
+    http_response_code(404);
+    exit("El reporte no existe.");
+}
+
+// Comprobar los permisos del usuario
+$esAdministrador = ($rolActual === 'administrador');
+
+$esPropietario = (
+    $rolActual === 'solicitante' &&
+    (int)$idPropietario === (int)$_SESSION['id_usuario']
+);
+
+// Bloquear usuarios sin permisos
+if (!$esAdministrador && !$esPropietario) {
     http_response_code(403);
-    exit("No tienes permiso para gestionar reportes.");
+    exit("No tienes permiso para consultar este reporte.");
 }
 
 // Obtener el ID del administrador
@@ -45,7 +73,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $asignarse = isset($_POST['asignarse']);
     $comentario = trim($_POST['comentario'] ?? '');
 
-    try {
+        // Solo el administrador puede modificar reportes
+    if (!$esAdministrador) {
+        http_response_code(403);
+        exit("No tienes permiso para modificar este reporte.");
+    }
+
+     try {
         $conexion->beginTransaction();
 
         // 1. Asignar técnico si se marcó la casilla o si no tiene técnico y se envía
@@ -114,17 +148,46 @@ $observaciones = $stmtObsList->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Reporte #<?php echo htmlspecialchars($reporte['id']); ?></title>
-    <link rel="stylesheet" href="estilos/pagina_principal.css">
+    <title>Detalle de Reporte #<?php echo htmlspecialchars($reporte['id']); ?></title>
+    <link rel="stylesheet" href="pagina_principal.css/Estilos2.css">
 </head>
 <body>
-    <header>
-        <h1>Gestión de Solicitud</h1>
-        <nav aria-label="Menú de gestión">
-            <a href="pagina_principal.php">← Volver al Panel</a> | 
-            <a href="cerrar_sesion.php">Cerrar Sesión</a>
-        </nav>
-    </header>
+    <header class="barra-superior">
+
+    <div class="barra-contenido">
+
+        <!-- LOGO Y NOMBRE DEL SISTEMA -->
+
+        <a href="pagina_principal.php" class="marca-institucional">
+
+            <img src="imagenes/logo.png"
+                 alt="Logo del IVSS"
+                 class="marca-logo">
+
+            <div class="marca-texto">
+                <strong>IVSS</strong>
+                <span>Sistema de Mesa de Ayuda</span>
+            </div>
+
+        </a>
+
+        <!-- NAVEGACIÓN -->
+
+        <div class="acciones-nav">
+
+            <a href="pagina_principal.php" class="cerrar-sesion">
+                ← Volver al panel
+            </a>
+
+            <a href="cerrar_sesion.php" class="cerrar-sesion">
+                Cerrar sesión
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
 
     <main>
         <?php if (!empty($mensaje)): ?>
@@ -133,65 +196,305 @@ $observaciones = $stmtObsList->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php endif; ?>
 
-        <section style="margin-bottom: 2rem;">
-            <h2>Reporte #<?php echo htmlspecialchars($reporte['id']); ?>: <?php echo htmlspecialchars($reporte['asunto']); ?></h2>
-            <p><strong>Fecha de registro:</strong> <?php echo htmlspecialchars($reporte['fecha_creacion']); ?></p>
-            <p><strong>Solicitante:</strong> <?php echo htmlspecialchars($reporte['solicitante']); ?> (Depto: <?php echo htmlspecialchars($reporte['departamento']); ?>)</p>
-            <p><strong>Tipo de Problema:</strong> <?php echo htmlspecialchars($reporte['tipo_problema']); ?></p>
-            <p><strong>Prioridad:</strong> <?php echo htmlspecialchars($reporte['prioridad']); ?></p>
-            <p><strong>Estado Actual:</strong> <?php echo htmlspecialchars($reporte['estado']); ?></p>
-            <p><strong>Técnico Asignado:</strong> <?php echo htmlspecialchars($reporte['tecnico_nombre'] ?? 'Ninguno'); ?></p>
-            <div style="margin-top: 1rem;">
-                <strong>Descripción detallada:</strong>
-                <p style="background: #f9f9f9; padding: 1rem; margin-top: 0.3rem; border: 1px solid #ddd;"><?php echo nl2br(htmlspecialchars($reporte['descripcion'])); ?></p>
+        <section class="detalle-reporte" aria-labelledby="titulo-detalle">
+
+    <!-- ENCABEZADO DEL REPORTE -->
+
+    <div class="detalle-reporte-encabezado">
+
+        <div>
+            <span class="detalle-etiqueta">
+                DETALLE DE SOLICITUD
+            </span>
+
+            <h2 id="titulo-detalle">
+                Reporte #<?php echo htmlspecialchars($reporte['id']); ?>:
+                <?php echo htmlspecialchars($reporte['asunto']); ?>
+            </h2>
+        </div>
+
+        <!-- ESTADO DEL REPORTE -->
+
+        <span class="etiqueta-estado <?php
+            echo ($reporte['estado'] === 'En proceso')
+                ? 'estado-proceso'
+                : (($reporte['estado'] === 'Resuelto')
+                    ? 'estado-resuelto'
+                    : 'estado-pendiente');
+        ?>">
+            <?php echo htmlspecialchars($reporte['estado']); ?>
+        </span>
+
+    </div>
+
+
+    <!-- INFORMACIÓN GENERAL -->
+
+    <div class="detalle-reporte-grid">
+
+        <div class="detalle-dato">
+            <span>Fecha de registro</span>
+            <strong>
+                <?php echo htmlspecialchars($reporte['fecha_creacion']); ?>
+            </strong>
+        </div>
+
+        <div class="detalle-dato">
+            <span>Solicitante</span>
+            <strong>
+                <?php echo htmlspecialchars($reporte['solicitante']); ?>
+            </strong>
+        </div>
+
+        <div class="detalle-dato">
+            <span>Departamento</span>
+            <strong>
+                <?php echo htmlspecialchars($reporte['departamento']); ?>
+            </strong>
+        </div>
+
+        <div class="detalle-dato">
+            <span>Tipo de problema</span>
+            <strong>
+                <?php echo htmlspecialchars($reporte['tipo_problema']); ?>
+            </strong>
+        </div>
+
+        <div class="detalle-dato">
+            <span>Prioridad</span>
+            <strong>
+                <?php echo htmlspecialchars($reporte['prioridad']); ?>
+            </strong>
+        </div>
+
+        <div class="detalle-dato">
+            <span>Técnico asignado</span>
+            <strong>
+                <?php echo htmlspecialchars($reporte['tecnico_nombre'] ?? 'Ninguno'); ?>
+            </strong>
+        </div>
+
+    </div>
+
+
+    <!-- DESCRIPCIÓN DEL PROBLEMA -->
+
+    <div class="detalle-descripcion">
+
+        <h3>Descripción detallada</h3>
+
+        <p>
+            <?php echo nl2br(htmlspecialchars($reporte['descripcion'])); ?>
+        </p>
+
+    </div>
+
+</section>
+        <?php if ($esAdministrador): ?>
+
+<section class="panel-actualizacion">
+
+    <!-- ENCABEZADO -->
+
+    <div class="encabezado-actualizacion">
+
+        <span class="detalle-etiqueta">
+            ADMINISTRACIÓN
+        </span>
+
+        <h3>Gestionar reporte</h3>
+
+        <p>
+            Actualiza el estado de la solicitud y registra
+            los avances de atención técnica.
+        </p>
+
+    </div>
+
+
+    <!-- FORMULARIO -->
+
+    <form method="POST"
+          action="detalle_reporte.php?id=<?php echo (int)$reporte['id']; ?>"
+          class="formulario-actualizacion">
+
+
+        <!-- ASIGNACIÓN DE TÉCNICO -->
+
+        <?php if (empty($reporte['tecnico_id'])): ?>
+
+            <div class="asignacion-tecnico">
+
+                <input type="checkbox"
+                       id="asignarse"
+                       name="asignarse"
+                       value="1">
+
+                <label for="asignarse">
+                    Asignarme este reporte como técnico responsable
+                </label>
+
             </div>
-        </section>
 
-        <section style="background: #fdfdfd; border: 1px solid #ccc; padding: 1.5rem; margin-bottom: 2rem;">
-            <h3>Actualizar Estado y Registrar Observación</h3>
-            <form method="POST" action="detalle_reporte.php?id=<?php echo $reporte['id']; ?>">
+        <?php endif; ?>
 
-                <?php if (empty($reporte['tecnico_id'])): ?>
-                    <div style="margin-bottom: 1rem;">
-                        <label>
-                            <input type="checkbox" name="asignarse" value="1"> Asignarme este reporte como técnico responsable
-                        </label>
+
+        <!-- CAMBIAR ESTADO -->
+
+        <div class="campo-actualizacion">
+
+            <label for="estado">
+                Estado de la solicitud
+            </label>
+
+            <select id="estado" name="estado">
+
+                <option value="Pendiente"
+                    <?php echo ($reporte['estado'] === 'Pendiente') ? 'selected' : ''; ?>>
+                    Pendiente
+                </option>
+
+                <option value="En proceso"
+                    <?php echo ($reporte['estado'] === 'En proceso') ? 'selected' : ''; ?>>
+                    En proceso
+                </option>
+
+                <option value="Resuelto"
+                    <?php echo ($reporte['estado'] === 'Resuelto') ? 'selected' : ''; ?>>
+                    Resuelto
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- OBSERVACIÓN TÉCNICA -->
+
+        <div class="campo-actualizacion">
+
+            <label for="comentario">
+                Observación técnica
+            </label>
+
+            <textarea
+                id="comentario"
+                name="comentario"
+                rows="4"
+                placeholder="Escribe los avances, detalles de la solución o acciones realizadas..."></textarea>
+
+        </div>
+
+
+        <!-- BOTÓN -->
+
+        <button type="submit" class="boton-guardar-cambios">
+            Guardar cambios
+        </button>
+
+
+    </form>
+
+</section>
+
+<?php else: ?>
+
+    <section style="background: #fdfdfd; border: 1px solid #ccc; padding: 1.5rem; margin-bottom: 2rem;">
+
+        <h3>Consulta de solicitud</h3>
+
+        <p>
+            Estás visualizando tu reporte.
+            Solo el personal administrador puede modificar
+            el estado o registrar observaciones.
+        </p>
+
+    </section>
+
+<?php endif; ?>
+        
+        <!-- HISTORIAL DE OBSERVACIONES -->
+
+<section class="panel-historial" aria-labelledby="titulo-historial">
+
+    <!-- ENCABEZADO -->
+
+    <div class="encabezado-historial">
+
+        <span class="detalle-etiqueta">
+            SEGUIMIENTO
+        </span>
+
+        <h3 id="titulo-historial">
+            Historial de observaciones
+        </h3>
+
+        <p>
+            Consulta los avances y las acciones realizadas
+            durante la atención de esta solicitud.
+        </p>
+
+    </div>
+
+
+    <!-- COMPROBAR SI EXISTEN OBSERVACIONES -->
+
+    <?php if (empty($observaciones)): ?>
+
+        <div class="historial-vacio">
+
+            <p>
+                Todavía no hay observaciones registradas
+                para este reporte.
+            </p>
+
+        </div>
+
+    <?php else: ?>
+
+
+        <!-- LISTADO DE OBSERVACIONES -->
+
+        <div class="lista-historial">
+
+            <?php foreach ($observaciones as $obs): ?>
+
+                <article class="item-historial">
+
+                    <!-- INFORMACIÓN DEL TÉCNICO Y FECHA -->
+
+                    <div class="meta-historial">
+
+                        <strong>
+                            <?php echo htmlspecialchars($obs['tecnico'], ENT_QUOTES, 'UTF-8'); ?>
+                        </strong>
+
+                        <time>
+                            <?php echo htmlspecialchars($obs['fecha'], ENT_QUOTES, 'UTF-8'); ?>
+                        </time>
+
                     </div>
-                <?php endif; ?>
 
-                <div style="margin-bottom: 1rem;">
-                    <label for="estado" style="display: block; font-weight: bold; margin-bottom: 0.3rem;">Cambiar Estado:</label>
-                    <select id="estado" name="estado" style="padding: 0.5rem; font-size: 1rem;">
-                        <option value="Pendiente" <?php echo ($reporte['estado'] === 'Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
-                        <option value="En proceso" <?php echo ($reporte['estado'] === 'En proceso') ? 'selected' : ''; ?>>En proceso</option>
-                        <option value="Resuelto" <?php echo ($reporte['estado'] === 'Resuelto') ? 'selected' : ''; ?>>Resuelto</option>
-                    </select>
-                </div>
 
-                <div style="margin-bottom: 1rem;">
-                    <label for="comentario" style="display: block; font-weight: bold; margin-bottom: 0.3rem;">Agregar Observación Técnica:</label>
-                    <textarea id="comentario" name="comentario" rows="3" placeholder="Escribe detalles de la solución o avance..." style="width: 100%; padding: 0.5rem; font-size: 1rem;"></textarea>
-                </div>
+                    <!-- CONTENIDO DE LA OBSERVACIÓN -->
 
-                <button type="submit" style="padding: 0.6rem 1.2rem; font-size: 1rem; cursor: pointer; background-color: #243b55; color: white; border: none; border-radius: 4px;">Guardar Cambios</button>
-            </form>
-        </section>
+                    <div class="contenido-observacion">
 
-        <section>
-            <h3>Historial de Observaciones</h3>
-            <?php if (empty($observaciones)): ?>
-                <p>No hay observaciones registradas para este reporte.</p>
-            <?php else: ?>
-                <ul style="list-style: none; padding: 0; margin-top: 1rem;">
-                    <?php foreach ($observaciones as $obs): ?>
-                        <li style="border-bottom: 1px solid #ddd; padding: 1rem 0;">
-                            <small style="color: #666;"><?php echo htmlspecialchars($obs['fecha']); ?> - <strong><?php echo htmlspecialchars($obs['tecnico']); ?></strong>:</small>
-                            <p style="margin-top: 0.3rem;"><?php echo nl2br(htmlspecialchars($obs['comentario'])); ?></p>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
-        </section>
+                        <p>
+                            <?php echo nl2br(htmlspecialchars($obs['comentario'], ENT_QUOTES, 'UTF-8')); ?>
+                        </p>
+
+                    </div>
+
+                </article>
+
+            <?php endforeach; ?>
+
+        </div>
+
+    <?php endif; ?>
+
+</section>
     </main>
 </body>
 </html>

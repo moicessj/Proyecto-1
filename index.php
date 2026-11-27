@@ -454,7 +454,7 @@ $mostrarFormularioLogin = (
 
     <link rel="stylesheet" href="estilos/style.css">
 
-    <title>Reportes del IVSS</title>
+    <title>Iniciar Sesión</title>
      <link rel="icon" type="image/png" href="imagenes/logo.png">
 
 </head>

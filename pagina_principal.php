@@ -122,28 +122,187 @@ $_SESSION['rol'] = $rol_usuario;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina principal</title>
-    <link rel="stylesheet" href="estilos/Estilos2.css">
+    <title>Reportes del IVSS</title>
+    <link rel="stylesheet" href="pagina_principal.css/Estilos2.css">
     <link rel="icon" type="image/png" href="imagenes/logo.png">
 </head>
 <body>
-    <header>
-        <h1>Sistema de Mesa de Ayuda</h1>
-        <nav aria-label="Menú principal">
-    <ul>
-        <li><a href="pagina_principal.php">Inicio</a></li>
-        <?php if ($rol_usuario === 'solicitante'): ?>
-            <li><a href="#">Mis Reportes</a></li>
-        <?php endif; ?>
-        <li><a href="cerrar_sesion.php">Cerrar Sesión</a></li>
-    </ul>
-</nav>
+       <!-- BARRA DE NAVEGACIÓN INSTITUCIONAL -->
+
+<header class="barra-superior">
+
+    <div class="barra-contenido">
+
+        <!-- LOGO Y NOMBRE DEL SISTEMA -->
+
+        <a href="pagina_principal.php" class="marca-institucional">
+
+            <img src="imagenes/logo.png"
+                 alt="Logo del IVSS"
+                 class="marca-logo">
+
+            <div class="marca-texto">
+                <strong>IVSS</strong>
+                <span>Sistema de Mesa de Ayuda</span>
+            </div>
+
+        </a>
+
+
+        <!-- MENÚ PRINCIPAL -->
+
+        <nav class="navegacion-principal"
+             aria-label="Menú principal">
+
+            <ul>
+
+                <li>
+                    <a href="pagina_principal.php"
+                       class="enlace-activo"
+                       aria-current="page">
+                        Inicio
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#listado-reportes">
+
+                        <?= ($rol_usuario === 'solicitante')
+                            ? 'Mis reportes'
+                            : 'Reportes' ?>
+
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <!-- USUARIO Y CIERRE DE SESIÓN -->
+
+        <div class="acciones-nav">
+
+            
+
+    <!-- BOTÓN DE USUARIO -->
+    <details class="menu-usuario">
+
+        <summary class="boton-usuario">
+
+            <!-- Icono de usuario -->
+            <span class="icono-usuario">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <circle cx="12" cy="8" r="4"></circle>
+
+                    <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
+
+                </svg>
+            </span>
+
+            <!-- Nombre y rol -->
+            <span class="texto-usuario">
+
+                <strong>
+                    <?= htmlspecialchars(
+                        $_SESSION['usuario'] ?? 'Usuario',
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
+                </strong>
+
+                <small>
+                    <?= htmlspecialchars(
+                        ucfirst($rol_usuario ?? 'solicitante'),
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>
+                </small>
+
+            </span>
+
+            <!-- Flecha desplegable -->
+            <svg class="flecha-menu"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+
+                <path d="m6 9 6 6 6-6"></path>
+
+            </svg>
+
+        </summary>
+
+        <!-- CONTENIDO DESPLEGABLE -->
+        <div class="contenido-menu-usuario">
+
+            <h4>Datos de la cuenta</h4>
+
+            <strong>
+                <?= htmlspecialchars(
+                    $_SESSION['usuario'] ?? 'Usuario',
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) ?>
+            </strong>
+
+            <span>
+                <?= htmlspecialchars(
+                    $_SESSION['correo'] ?? 'Correo no disponible',
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) ?>
+            </span>
+
+            <span>
+                Rol:
+                <?= htmlspecialchars(
+                    ucfirst($rol_usuario ?? 'solicitante'),
+                    ENT_QUOTES,
+                    'UTF-8'
+                ) ?>
+            </span>
+
+        </div>
+
+    </details>
+
+    <!-- CERRAR SESIÓN -->
+    <a href="cerrar_sesion.php"
+       class="cerrar-sesion">
+
+        Cerrar sesión
+
+    </a>
+
+</div>
+
+    </div>
+
     </header>
     <main>
-        <section>
+        <section class="seccion-bienvenida">
             <!-- Esto mostrará dinámicamente el nombre de la persona que haya iniciado sesión -->
             <h2>Bienvenido, <?= htmlspecialchars($_SESSION['usuario'] ?? 'Usuario', ENT_QUOTES, 'UTF-8') ?></h2>
-<?php if ($rol_usuario === 'administrador'): ?>
+<div class="bienvenida-descripcion">
+    <p>
+        Gestiona tus solicitudes de soporte técnico desde un solo lugar.
+    </p>
+
+    <div class="bienvenida-distintivo">
+        <span aria-hidden="true">✓</span>
+        Plataforma de atención institucional
+    </div>
+</div>
+</section>
+            <?php if ($rol_usuario === 'administrador'): ?>
         <section style="margin-top: 2rem; margin-bottom: 2rem;">
             <h3>Panel de Control (Resumen de Reportes)</h3>
             <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem;">
@@ -169,16 +328,14 @@ $_SESSION['rol'] = $rol_usuario;
             </div>
         </section>
     <?php endif; ?>
-            <p>
-                Has iniciado sesión correctamente en el Sistema de Mesa de Ayuda.
-            </p>
-        </section>
-
 
 
    <?php if ($rol_usuario === 'solicitante'): ?>
-    <section>
+   <section class="seccion-formulario">
+    <div class="encabezado-formulario">
         <h3>Registrar Nuevo Reporte</h3>
+        <p>Completa los siguientes campos para enviar tu solicitud de soporte técnico.</p>
+    </div>
         <?php if (isset($_SESSION['mensaje_reporte'])): ?>
             <div role="alert" style="padding: 0.8rem; margin-bottom: 1rem; border-left: 4px solid <?php echo ($_SESSION['tipo_mensaje'] === 'exito') ? '#2e7d32' : '#c62828'; ?>; font-weight: bold; color: <?php echo ($_SESSION['tipo_mensaje'] === 'exito') ? '#1b5e20' : '#b71c1c'; ?>;">
                 <?php 
@@ -187,52 +344,54 @@ $_SESSION['rol'] = $rol_usuario;
                 ?>
             </div>
         <?php endif; ?>
-        <form action="registrar_reporte.php" method="POST">
+        <form action="registrar_reporte.php" method="POST" class="formulario-reporte">
 
-            <div style="margin-bottom: 1rem;">
-                <label for="departamento" style="display: block; margin-bottom: 0.3rem; font-weight: bold;">Departamento:</label>
-                <input type="text" id="departamento" name="departamento" required style="width: 100%; padding: 0.5rem; font-size: 1rem;">
-            </div>
+            <div class="grupo-campo">
+    <label for="departamento">Departamento</label>
+    <input type="text" id="departamento" name="departamento" required>
+</div>
 
-            <div style="margin-bottom: 1rem;">
-                <label for="tipo_problema" style="display: block; margin-bottom: 0.3rem; font-weight: bold;">Tipo de Problema:</label>
-                <select id="tipo_problema" name="tipo_problema" required style="width: 100%; padding: 0.5rem; font-size: 1rem;">
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    <option value="Computadora">Computadora</option>
-                    <option value="Impresora">Impresora</option>
-                    <option value="Internet">Internet</option>
-                    <option value="Software">Software</option>
-                    <option value="Otros">Otros</option>
-                </select>
-            </div>
+            <div class="grupo-campo">
+    <label for="tipo_problema">Tipo de problema</label>
+    <select id="tipo_problema" name="tipo_problema" required>
+        <option value="" disabled selected>Seleccione una opción</option>
+        <option value="Computadora">Computadora</option>
+        <option value="Impresora">Impresora</option>
+        <option value="Internet">Internet</option>
+        <option value="Software">Software</option>
+        <option value="Otros">Otros</option>
+    </select>
+</div>
 
-            <div style="margin-bottom: 1rem;">
-                <label for="asunto" style="display: block; margin-bottom: 0.3rem; font-weight: bold;">Asunto:</label>
-                <input type="text" id="asunto" name="asunto" required style="width: 100%; padding: 0.5rem; font-size: 1rem;">
-            </div>
+           <div class="grupo-campo">
+    <label for="asunto">Asunto</label>
+    <input type="text" id="asunto" name="asunto" required>
+</div>
 
-            <div style="margin-bottom: 1rem;">
-                <label for="descripcion" style="display: block; margin-bottom: 0.3rem; font-weight: bold;">Descripción detallada:</label>
-                <textarea id="descripcion" name="descripcion" rows="4" required style="width: 100%; padding: 0.5rem; font-size: 1rem;"></textarea>
-            </div>
+            <div class="grupo-campo">
+    <label for="descripcion">Descripción detallada</label>
+    <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+</div>
 
-            <div style="margin-bottom: 1rem;">
-                <label for="prioridad" style="display: block; margin-bottom: 0.3rem; font-weight: bold;">Prioridad:</label>
-                <select id="prioridad" name="prioridad" required style="width: 100%; padding: 0.5rem; font-size: 1rem;">
-                    <option value="Baja">Baja</option>
-                    <option value="Media" selected>Media</option>
-                    <option value="Alta">Alta</option>
-                </select>
-            </div>
+            <div class="grupo-campo">
+    <label for="prioridad">Prioridad</label>
+    <select id="prioridad" name="prioridad" required>
+        <option value="Baja">Baja</option>
+        <option value="Media" selected>Media</option>
+        <option value="Alta">Alta</option>
+    </select>
+</div>
 
-            <button type="submit" name="guardar_reporte" style="padding: 0.6rem 1.2rem; font-size: 1rem; cursor: pointer; background-color: #243b55; color: white; border: none; border-radius: 4px;">Enviar Reporte</button>
+            <button type="submit" name="guardar_reporte" class="boton-enviar-reporte">
+    Enviar Reporte
+</button>
         </form>
     </section>
     <?php endif; ?>
 
 
 
-    <section style="margin-top: 3rem;">
+    <section id="listado-reportes" style="margin-top: 3rem;">
     <h3>Listado de Reportes</h3>
 
 <form method="GET" action="pagina_principal.php" style="margin: 1rem 0; display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
@@ -280,17 +439,18 @@ $_SESSION['rol'] = $rol_usuario;
                 <tbody>
                     <?php foreach ($lista_reportes as $rep): ?>
                         <tr style="border-bottom: 1px solid #ddd;">
-                           <td style="padding: 0.75rem; border: 1px solid #ddd;">
-    <?php if ($rol_usuario === 'administrador'): ?>
-        <a href="detalle_reporte.php?id=<?php echo $rep['id']; ?>" style="color: #243b55; font-weight: bold; text-decoration: underline;">
-            #<?php echo htmlspecialchars($rep['id']); ?>
-        </a>
-    <?php else: ?>
-        <span style="font-weight: bold; color: #555;">
-            #<?php echo htmlspecialchars($rep['id']); ?>
-        </span>
-    <?php endif; ?>
+                           
+                            <td style="padding: 0.75rem; border: 1px solid #ddd;">
+
+    <a href="detalle_reporte.php?id=<?php echo (int)$rep['id']; ?>"
+       style="color: #244A73; font-weight: bold; text-decoration: underline;">
+
+        #<?php echo htmlspecialchars($rep['id']); ?>
+
+    </a>
+
 </td>
+
                             <td style="padding: 0.75rem; border: 1px solid #ddd;"><?php echo htmlspecialchars($rep['fecha_creacion']); ?></td>
                             <td style="padding: 0.75rem; border: 1px solid #ddd;"><?php echo htmlspecialchars($rep['departamento']); ?></td>
                             <td style="padding: 0.75rem; border: 1px solid #ddd;"><?php echo htmlspecialchars($rep['solicitante']); ?></td>
